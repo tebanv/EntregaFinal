@@ -107,7 +107,8 @@ namespace EntregaFinal
         private void SaveParameters()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-            localSettings.Values["ApiUrl"] = "https://posunoapi.azurewebsites.net/";
+            //localSettings.Values["ApiUrl"] = "https://posunoapi.azurewebsites.net/";
+            localSettings.Values["ApiUrl"] = "https://localhost:44308/";
         }
 
         /// <summary>

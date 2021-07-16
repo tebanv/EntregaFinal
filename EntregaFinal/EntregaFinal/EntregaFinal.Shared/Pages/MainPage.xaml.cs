@@ -22,7 +22,8 @@ namespace EntregaFinal.Pages
         {
             base.OnNavigatedTo(e);
             user = (User)e.Parameter;
-            WelcomeTextBlock.Text = $"Bienvenido: {user.FullName}";
+            WelcomeTextBlock.Text = $"Bienvenid@: {user.FullName}";
+            MyFrame.Navigate(typeof(CustomersPage));
         }
 
         private async void LogoutImage_Tapped(object sender, TappedRoutedEventArgs e)
@@ -45,6 +46,16 @@ namespace EntregaFinal.Pages
             };
 
             return await confirmDialog.ShowAsync();
+        }
+
+        private void CustomersNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MyFrame.Navigate(typeof(CustomersPage));
+        }
+
+        private void ProductsNavigationViewItem_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            MyFrame.Navigate(typeof(ProductsPage));
         }
     }
 }
