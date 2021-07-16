@@ -1,4 +1,5 @@
 ﻿using EntregaFinal.Components;
+using EntregaFinal.Dialogs;
 using EntregaFinal.Helpers;
 using EntregaFinal.Models;
 using System;
@@ -60,6 +61,21 @@ namespace EntregaFinal.Pages
             CustomersListView.ItemsSource = null;
             CustomersListView.Items.Clear();
             CustomersListView.ItemsSource = Customers;
+        }
+
+        private async void AddCustomerButton_Click(object sender, RoutedEventArgs e)
+        {
+            Customer customer = new Customer();
+            CustomerDialog dialog = new CustomerDialog(customer);
+            await dialog.ShowAsync();
+        }
+
+        private async void EditImage_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Customer customer = Customers[CustomersListView.SelectedIndex];
+            customer.IsEdit = true;
+            CustomerDialog dialog = new CustomerDialog(customer);
+            await dialog.ShowAsync();
         }
     }
 }
