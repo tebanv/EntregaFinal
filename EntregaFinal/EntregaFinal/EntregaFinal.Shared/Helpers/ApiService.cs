@@ -22,12 +22,13 @@ namespace EntregaFinal.Helpers
                     ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
                 };
 
+                string url = Settings.GetApiUrl();
                 HttpClient client = new HttpClient(handler)
                 {
-                    BaseAddress = new Uri("https://localhost:44308/")
+                    BaseAddress = new Uri(url)
                 };
 
-                HttpResponseMessage response = await client.PostAsync("api/Accounts/Login", content);
+                HttpResponseMessage response = await client.PostAsync("api/Account/CreateToken", content);
                 string result = await response.Content.ReadAsStringAsync();
                 if (!response.IsSuccessStatusCode)
                 {
