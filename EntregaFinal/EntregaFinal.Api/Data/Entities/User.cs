@@ -18,8 +18,5 @@ namespace EntregaFinal.Api.Data.Entities
         [MaxLength(50)]
         public string LastName { get; set; }
 
-        public ICollection<Product> Products { get; set; }
-
-        public ICollection<Customer> customers{ get; set; }
     }
 }

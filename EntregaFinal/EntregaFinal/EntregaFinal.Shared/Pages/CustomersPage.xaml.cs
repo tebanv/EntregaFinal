@@ -43,7 +43,7 @@ namespace EntregaFinal.Pages
         {
             Loader loader = new Loader("Por favor espere...");
             loader.Show();
-            Response response = await ApiService.GetListAsync<Customer>("customers");
+            Response response = await ApiService.GetListAsync<Customer>("customers", MainPage.GetInstance().TokenResponse.Token);
             loader.Close();
 
             if (!response.IsSuccess)
@@ -75,11 +75,9 @@ namespace EntregaFinal.Pages
                 return;
             }
 
-            customer.User = MainPage.GetInstance().user;
-
             Loader loader = new Loader("Por favor espere...");
             loader.Show();
-            Response response = await ApiService.PostAsync("Customers", customer);
+            Response response = await ApiService.PostAsync("Customers", customer, MainPage.GetInstance().TokenResponse.Token);
             loader.Close();
 
             if (!response.IsSuccess)
@@ -105,11 +103,9 @@ namespace EntregaFinal.Pages
                 return;
             }
 
-            customer.User = MainPage.GetInstance().user;
-
             Loader loader = new Loader("Por favor espere...");
             loader.Show();
-            Response response = await ApiService.PutAsync("Customers", customer, customer.Id);
+            Response response = await ApiService.PutAsync("Customers", customer, customer.Id, MainPage.GetInstance().TokenResponse.Token);
             loader.Close();
 
             if (!response.IsSuccess)
@@ -136,7 +132,7 @@ namespace EntregaFinal.Pages
             Loader loader = new Loader("Por favor espere...");
             loader.Show();
             Customer customer = Customers[CustomersListView.SelectedIndex];
-            Response response = await ApiService.DeleteAsync("Customers", customer.Id);
+            Response response = await ApiService.DeleteAsync("Customers", customer.Id, MainPage.GetInstance().TokenResponse.Token);
             loader.Close();
 
             if (!response.IsSuccess)

@@ -20,7 +20,7 @@ namespace EntregaFinal.Pages
             _instance = this;
         }
 
-        public User user { get; set; }
+        public TokenResponse TokenResponse { get; set; }
 
         public static MainPage GetInstance()
         {
@@ -30,8 +30,8 @@ namespace EntregaFinal.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            user = (User)e.Parameter;
-            WelcomeTextBlock.Text = $"Bienvenid@: {user.FullName}";
+            TokenResponse = (TokenResponse)e.Parameter;
+            WelcomeTextBlock.Text = $"Bienvenid@: {TokenResponse.User.FullName}";
             MyFrame.Navigate(typeof(CustomersPage));
         }
 

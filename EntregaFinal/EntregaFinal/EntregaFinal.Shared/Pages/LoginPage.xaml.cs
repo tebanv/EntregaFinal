@@ -43,20 +43,20 @@ namespace EntregaFinal.Pages
             MessageDialog messageDialog;
             if (!response.IsSuccess)
             {
-                messageDialog = new MessageDialog(response.Message, "Error");
+                messageDialog = new MessageDialog("Usuario o contraseña incorrectos", "Error");
                 await messageDialog.ShowAsync();
                 return;
             }
 
-            User user = (User)response.Result;
-            if (user == null)
+            TokenResponse tokenResponse = (TokenResponse)response.Result;
+            if (tokenResponse == null)
             {
                 messageDialog = new MessageDialog("Usuario o contraseña incorrectos", "Error");
                 await messageDialog.ShowAsync();
                 return;
             }
 
-            Frame.Navigate(typeof(MainPage), user);
+            Frame.Navigate(typeof(MainPage), tokenResponse);
         }
 
         private async Task<bool> ValidForm()
