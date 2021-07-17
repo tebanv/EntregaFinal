@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using EntregaFinal.Api.Data;
 using EntregaFinal.Api.Data.Entities;
 using EntregaFinal.Api.Helpers;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace EntregaFinal.Api
 {
@@ -39,6 +41,20 @@ namespace EntregaFinal.Api
                 //Conexion a la base de datos con el archivo appsettings.json y su cadena de conexion
                 cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services
+                .AddAuthentication()
+                .AddCookie()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = Configuration["Tokens:Issuer"],
+                        ValidAudience = Configuration["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+                    };
+                });
+
             // Poblamos la base de datos
             services.AddTransient<SeedDb>();
             services.AddScoped<IUserHelper, UserHelper>();

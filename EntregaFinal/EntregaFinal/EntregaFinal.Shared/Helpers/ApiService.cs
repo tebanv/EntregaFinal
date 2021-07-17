@@ -28,8 +28,7 @@ namespace EntregaFinal.Helpers
                     BaseAddress = new Uri(url)
                 };
 
-                // HttpResponseMessage response = await client.PostAsync("api/Account/CreateToken", content);
-                HttpResponseMessage response = await client.PostAsync("api/Accounts/Login", content);
+                HttpResponseMessage response = await client.PostAsync("api/Account/CreateToken", content);
                 string result = await response.Content.ReadAsStringAsync();
                 if (!response.IsSuccessStatusCode)
                 {
