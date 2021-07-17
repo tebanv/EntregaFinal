@@ -11,12 +11,21 @@ namespace EntregaFinal.Pages
 {
     public sealed partial class MainPage : Page
     {
+
+        private static MainPage _instance;
+
         public MainPage()
         {
             this.InitializeComponent();
+            _instance = this;
         }
 
         public User user { get; set; }
+
+        public static MainPage GetInstance()
+        {
+            return _instance;
+        }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
