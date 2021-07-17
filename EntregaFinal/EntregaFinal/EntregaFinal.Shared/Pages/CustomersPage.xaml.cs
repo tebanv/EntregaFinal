@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
@@ -123,5 +124,45 @@ namespace EntregaFinal.Pages
             oldCustomer = newCustomer;
             RefreshList();
         }
+
+        private async void DeleteImage_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ContentDialogResult result = await ConfirmDeleteAsync();
+            if (result != ContentDialogResult.Primary)
+            {
+                return;
+            }
+
+            Loader loader = new Loader("Por favor espere...");
+            loader.Show();
+            Customer customer = Customers[CustomersListView.SelectedIndex];
+            Response response = await ApiService.DeleteAsync("Customers", customer.Id);
+            loader.Close();
+
+            if (!response.IsSuccess)
+            {
+                MessageDialog messageDialog = new MessageDialog(response.Message, "Error");
+                await messageDialog.ShowAsync();
+                return;
+            }
+
+            List<Customer> customers = Customers.Where(c => c.Id != customer.Id).ToList();
+            Customers = new ObservableCollection<Customer>(customers);
+            RefreshList();
+        }
+
+        private async Task<ContentDialogResult> ConfirmDeleteAsync()
+        {
+            ContentDialog confirmDialog = new ContentDialog
+            {
+                Title = "Confirmación",
+                Content = "¿Estás seguro de querer borrar el registro?",
+                PrimaryButtonText = "Sí",
+                CloseButtonText = "No"
+            };
+
+            return await confirmDialog.ShowAsync();
+        }
     }
+    
 }
